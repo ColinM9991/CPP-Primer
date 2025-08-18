@@ -108,7 +108,7 @@ In the case of the first version there is a bigger risk since the result of a co
 
 # Exercise Section 5.2
 
-## Exercise 5.2
+## Exercise 5.4
 
 ### Question:
 
@@ -151,3 +151,133 @@ while (bool status = find(word)) {
 }
 ```
 
+# Exercise Section 5.3.1
+
+## Exercise 5.5
+
+### Question:
+
+Using an `if-else` statement, write your own version of the program to generate the letter grade from a numeric grade;
+
+### Answer:
+
+```cpp
+#include <iostream>
+#include <vector>
+
+int main() {
+    const std::vector<std::string> scores{"F", "D", "C", "B", "A", "A++"};
+
+    unsigned grade;
+    if (std::cin >> grade && grade <= 100) {
+        const std::string *letterGrade;
+        if (grade < 60) {
+            letterGrade = &scores[0];
+        } else {
+            letterGrade = &scores[(grade - 50) / 10];
+        }
+
+        std::cout << "Grade: " << *letterGrade << std::endl;
+    } else {
+        std::cout << "Unspported grade. Grade must be between 0-100" << std::endl;
+    }
+}
+```
+
+## Exercise 5.6
+
+### Question:
+
+Rewrite your grading program to use the conditional operator in place of the `if-else` statement.
+
+### Answer:
+
+```cpp
+#include <iostream>
+#include <vector>
+
+int main() {
+    const std::vector<std::string> scores{"F", "D", "C", "B", "A", "A++"};
+
+    unsigned grade;
+    if (std::cin >> grade && grade <= 100) {
+        const auto index = grade >= 60 ? (grade - 50) / 10 : 0;
+        const std::string *letterGrade = &scores[index];
+
+        std::cout << "Grade: " << *letterGrade << std::endl;
+    } else {
+        std::cout << "Unspported grade. Grade must be between 0-100" << std::endl;
+    }
+}
+```
+
+## Exercise 5.7
+
+### Question:
+
+Correct the errors in each of the following code fragments
+
+```cpp
+(a) 
+if (ival1 != ival2)
+    ival1 = ival2
+else ival1 = ival2 = 0;
+(b)
+if (ival < minval)
+    minval = ival;
+    occurs = 1;
+(c)
+if (int ival = get_value())
+    cout << "ival = " << ival << endl;
+if (!ival)
+    cout << "ival = 0\n";
+(d) 
+if (ival = 0)
+    ival = get_value();
+```
+
+### Answers:
+
+(A)
+```cpp
+if (ival1 != ival2)
+    ival1 = ival2;
+else ival1 = ival2 = 0;
+```
+
+(B)
+```cpp
+if (ival < minval)
+{
+    minval = ival;
+    occurs = 1;
+}
+```
+
+(C)
+```cpp
+if (int ival = get_value())
+    std::cout << "ival = " << ival << std::endl;
+else if (!ival)
+    std::cout << "ival = 0" << std::endl;
+```
+
+(D)
+```cpp
+if (ival == 0)
+    ival = get_value();
+```
+
+## Exercise 5.8
+
+### Question:
+
+What is a "dangling `else`"? How are `else` clauses resolved in C++?
+
+### Answer:
+
+A "dangling `else`" defines the ambiguity to which `if` statement an `else` branch belongs to.
+
+In C++, an `else` clause is resolved in relation to its nearest preceding `if` statement that is defined within the same block.
+
+An `else` statement can be paired with an `if` statement by adding braces around the nested statement.
