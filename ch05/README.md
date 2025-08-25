@@ -660,7 +660,6 @@ switch(swt) {
 ### Answers:
 
 ```cpp
-```cpp
 // (a)
 unsigned aCnt = 0, eCnt = 0, iouCnt = 0;
 char ch = next_text();
@@ -724,5 +723,48 @@ switch (swt) {
         break;
     default:
         break;
+}
+```
+
+# Exercise Section 5.4.1
+
+## Exercise 5.14
+
+### Question:
+
+Write a program to read strings from standard input looking for duplicated words. The program should find places in the input where one word is followed immediately by itself. 
+
+Keep track of the largest number of times a single repetition occurs and which word is repeated. Print the maximum number of duplicates, or else print a message saying that no word was repeated.
+
+For example, if the input is
+> how now now now brown cow cow
+
+the output should indicate that the word nowoccurred three times.
+
+### Answer:
+
+```cpp
+string duplicated_word;
+unsigned duplicated_count = 0;
+
+unsigned count = 0;
+
+for (string input, previous; cin >> input; previous = input) {
+    if (input == previous) {
+        count++;
+    } else {
+        count = 1;
+    }
+
+    if (count > duplicated_count) {
+        duplicated_word = input;
+        duplicated_count = count;
+    }
+}
+
+if (duplicated_count < 1)
+    cout << "No duplicates found" << endl;
+else {
+    cout << "The word \"" << duplicated_word << "\" occurred " << duplicated_count << " times" << endl;
 }
 ```
