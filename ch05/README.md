@@ -281,3 +281,448 @@ A "dangling `else`" defines the ambiguity to which `if` statement an `else` bran
 In C++, an `else` clause is resolved in relation to its nearest preceding `if` statement that is defined within the same block.
 
 An `else` statement can be paired with an `if` statement by adding braces around the nested statement.
+
+# Execise Section 5.3.2
+
+## Exercise 5.9
+
+### Question:
+
+Write a program using a series of `if` statements to count the number of vowels in text read from `cin`.
+
+### Answer:
+
+```cpp
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    string input;
+
+    getline(cin, input);
+
+    unsigned aCnt = 0, eCnt = 0, iCnt = 0, oCnt = 0, uCnt = 0;
+    for (const auto c: input) {
+        if (c == 'a')
+            aCnt++;
+        else if (c == 'e')
+            eCnt++;
+        else if (c == 'i')
+            iCnt++;
+        else if (c == 'o')
+            oCnt++;
+        else if (c == 'u')
+            uCnt++;
+    }
+
+    const auto total = aCnt + eCnt + iCnt + oCnt + uCnt;
+    cout << "Count of a: " << aCnt << endl
+            << "Count of e: " << eCnt << endl
+            << "Count of i: " << iCnt << endl
+            << "Count of o: " << oCnt << endl
+            << "Count of u: " << uCnt << endl
+            << "Total vowels: " << total << endl;
+}
+```
+
+## Exercise 5.10
+
+### Question:
+
+There is one problem with our vowel-counting program as we've implemented it:
+
+It doesn't count capital letters as vowels. Write a program that counts both lower and uppercase letters as the appropriate vowel - that is, your program should count both 'a'and 'A' as part of `aCnt`, and so forth.
+
+### Answers:
+
+1. Logical OR operators
+
+```cpp
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    string input;
+
+    getline(cin, input);
+
+    unsigned aCnt = 0, eCnt = 0, iCnt = 0, oCnt = 0, uCnt = 0;
+    for (const auto c: input) {
+        if (c == 'a' || c == 'A')
+            aCnt++;
+        else if (c == 'e' || c == 'E')
+            eCnt++;
+        else if (c == 'i' || c == 'I')
+            iCnt++;
+        else if (c == 'o' || c == 'O')
+            oCnt++;
+        else if (c == 'u' || c == 'U')
+            uCnt++;
+    }
+
+    const auto total = aCnt + eCnt + iCnt + oCnt + uCnt;
+    cout << "Count of a: " << aCnt << endl
+            << "Count of e: " << eCnt << endl
+            << "Count of i: " << iCnt << endl
+            << "Count of o: " << oCnt << endl
+            << "Count of u: " << uCnt << endl
+            << "Total vowels: " << total << endl;
+}
+```
+
+2. Lowercasing
+
+```cpp
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    string input;
+
+    getline(cin, input);
+
+    unsigned aCnt = 0, eCnt = 0, iCnt = 0, oCnt = 0, uCnt = 0;
+    for (const auto c: input) {
+        auto lowered = tolower(c);
+        if (lowered == 'a')
+            aCnt++;
+        else if (lowered == 'e')
+            eCnt++;
+        else if (lowered == 'i')
+            iCnt++;
+        else if (lowered == 'o')
+            oCnt++;
+        else if (lowered == 'u')
+            uCnt++;
+    }
+
+    const auto total = aCnt + eCnt + iCnt + oCnt + uCnt;
+    cout << "Count of a: " << aCnt << endl
+            << "Count of e: " << eCnt << endl
+            << "Count of i: " << iCnt << endl
+            << "Count of o: " << oCnt << endl
+            << "Count of u: " << uCnt << endl
+            << "Total vowels: " << total << endl;
+}
+```
+
+3. Switch
+
+```cpp
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    unsigned aCnt = 0, eCnt = 0, iCnt = 0, oCnt = 0, uCnt = 0, blankCnt = 0, tabCnt = 0, newlineCnt = 0;
+
+    char ch;
+
+    while (cin >> noskipws >> ch) {
+        switch (ch) {
+            case 'a':
+            case 'A':
+                aCnt++;
+                break;
+            case 'e':
+            case 'E':
+                eCnt++;
+                break;
+            case 'i':
+            case 'I':
+                iCnt++;
+                break;
+            case 'o':
+            case 'O':
+                oCnt++;
+                break;
+            case 'u':
+            case 'U':
+                uCnt++;
+                break;
+            default:
+                break;
+        }
+    }
+
+    const auto total = aCnt + eCnt + iCnt + oCnt + uCnt;
+    cout << "Count of a: " << aCnt << endl
+            << "Count of e: " << eCnt << endl
+            << "Count of i: " << iCnt << endl
+            << "Count of o: " << oCnt << endl
+            << "Count of u: " << uCnt << endl
+            << "Total vowels: " << total << endl;
+}
+```
+
+## Exercise 5.11
+
+### Question:
+
+Modify our vowel-counting program so that it also counts the number of blank spaces, tabs, and newlines read.
+
+### Answer:
+
+```cpp
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    unsigned aCnt = 0, eCnt = 0, iCnt = 0, oCnt = 0, uCnt = 0, blankCnt = 0, tabCnt = 0, newlineCnt = 0;
+
+    char ch;
+
+    while (cin >> noskipws >> ch) {
+        switch (ch) {
+            case 'a':
+            case 'A':
+                aCnt++;
+                break;
+            case 'e':
+            case 'E':
+                eCnt++;
+                break;
+            case 'i':
+            case 'I':
+                iCnt++;
+                break;
+            case 'o':
+            case 'O':
+                oCnt++;
+                break;
+            case 'u':
+            case 'U':
+                uCnt++;
+                break;
+            case ' ':
+                blankCnt++;
+                break;
+            case '\t':
+                tabCnt++;
+                break;
+            case '\n':
+            case '\r':
+                newlineCnt++;
+                break;
+            default:
+                break;
+        }
+    }
+
+    const auto total = aCnt + eCnt + iCnt + oCnt + uCnt;
+    cout << "Count of a: " << aCnt << endl
+            << "Count of e: " << eCnt << endl
+            << "Count of i: " << iCnt << endl
+            << "Count of o: " << oCnt << endl
+            << "Count of u: " << uCnt << endl
+            << "Total vowels: " << total << endl
+            << "Blank spaces: " << blankCnt << endl
+            << "Tabs : " << tabCnt << endl
+            << "New lines: " << newlineCnt << endl;
+}
+```
+
+## Exercise 5.12
+
+### Question:
+
+Modify our vowel-counting program so that it counts the number of occurrences of the following two-character sequences
+
+### Answer:
+
+```cpp
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    unsigned aCnt = 0, eCnt = 0, iCnt = 0, oCnt = 0, uCnt = 0, blankCnt = 0, tabCnt = 0, newlineCnt = 0, sequencesCnt =
+            0;
+
+    char ch;
+    char previous = '\0';
+
+    while (cin >> noskipws >> ch) {
+        switch (ch) {
+            case 'a':
+            case 'A':
+                aCnt++;
+                break;
+            case 'e':
+            case 'E':
+                eCnt++;
+                break;
+            case 'i':
+            case 'I':
+                if (previous == 'f') sequencesCnt++;
+                iCnt++;
+                break;
+            case 'o':
+            case 'O':
+                oCnt++;
+                break;
+            case 'u':
+            case 'U':
+                uCnt++;
+                break;
+            case ' ':
+                blankCnt++;
+                break;
+            case '\t':
+                tabCnt++;
+                break;
+            case '\n':
+            case '\r':
+                newlineCnt++;
+                break;
+            case 'f':
+            case 'l':
+                if (previous == 'f') sequencesCnt++;
+            default:
+                break;
+        }
+
+        previous = ch;
+    }
+
+    const auto total = aCnt + eCnt + iCnt + oCnt + uCnt;
+    cout << "Count of a: " << aCnt << endl
+            << "Count of e: " << eCnt << endl
+            << "Count of i: " << iCnt << endl
+            << "Count of o: " << oCnt << endl
+            << "Count of u: " << uCnt << endl
+            << "Total vowels: " << total << endl
+            << "Blank spaces: " << blankCnt << endl
+            << "Tabs : " << tabCnt << endl
+            << "New lines: " << newlineCnt << endl
+            << "Sequences: " << sequencesCnt << endl;
+}
+```
+
+## Exercise 5.13
+
+### Question:
+
+Each of the programs in the highlighted text on page 184 contains a common programming error. Identify and correct each error.
+
+```cpp
+// (a)
+unsigned aCnt = 0, eCnt = 0, iouCnt = 0;
+char ch = next_text();
+switch (ch) {
+    case 'a': aCnt++;
+    case 'e': eCnt++;
+    default: iouCnt++;
+}
+// (b)
+unsigned index = some_value();
+switch (index) {
+    case 1:
+        int ix = get_value();
+        ivec[ ix ] = index;
+        break;
+    default:
+        ix = ivec.size()-1;
+        ivec[ ix ] = index;
+}
+// (c)
+unsigned evenCnt = 0, oddCnt = 0;
+int digit = get_num() % 10;
+switch (digit) {
+    case 1, 3, 5, 7, 9:
+        oddcnt++;
+        break;
+    case 2, 4, 6, 8, 10:
+        evencnt++;
+        break;
+}
+// (d)
+unsigned ival=512, jval=1024, kval=4096;
+unsigned bufsize;
+unsigned swt = get_bufCnt();
+switch(swt) {
+    case ival:
+        bufsize = ival * sizeof(int);
+        break;
+    case jval:
+        bufsize = jval * sizeof(int);
+        break;
+    case kval:
+        bufsize = kval * sizeof(int);
+        break;
+}
+```
+
+### Answers:
+
+```cpp
+```cpp
+// (a)
+unsigned aCnt = 0, eCnt = 0, iouCnt = 0;
+char ch = next_text();
+switch (ch) {
+    case 'a':
+        aCnt++;
+        break;
+    case 'e':
+        eCnt++;
+        break;
+    default:
+        iouCnt++;
+        break;
+}
+// (b)
+unsigned index = some_value();
+switch (index) {
+    case 1: {
+        int ix = get_value();
+        ivec[ ix ] = index;
+        break;
+    }
+    default:
+        auto ix = ivec.size()-1;
+        ivec[ ix ] = index;
+}
+// (c)
+unsigned evenCnt = 0, oddCnt = 0;
+int digit = get_num() % 10;
+switch (digit) {
+    case 1:
+    case 3:
+    case 5:
+    case 7:
+    case 9:
+        oddCnt++;
+        break;
+    case 2:
+    case 4:
+    case 6:
+    case 8:
+    case 10:
+        evenCnt++;
+        break;
+    default:
+        break;
+}
+// (d)
+constexpr unsigned ival=512, jval=1024, kval=4096;
+unsigned bufsize;
+unsigned swt = get_bufCnt();
+switch (swt) {
+    case ival:
+        bufsize = ival * sizeof(int);
+        break;
+    case jval:
+        bufsize = jval * sizeof(int);
+        break;
+    case kval:
+        bufsize = kval * sizeof(int);
+        break;
+    default:
+        break;
+}
+```
