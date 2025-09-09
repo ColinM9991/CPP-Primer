@@ -768,3 +768,110 @@ else {
     cout << "The word \"" << duplicated_word << "\" occurred " << duplicated_count << " times" << endl;
 }
 ```
+
+# Exercise Section 5.4.2
+
+## Exercise 5.15
+
+### Question:
+
+Explain each of the following loops. Correct any problems you detect.
+
+a.
+```cpp
+for (int ix = 0; ix != sz; ++ix) { /* ... */ }
+if (ix != sz)
+    // ...
+```
+
+b.
+```cpp
+int ix;
+for (ix != z; ++ix) { /* ... */ }
+```
+
+c.
+```cpp
+for (int ix = 0; ix != sz; ++ix, ++sz) { /* ... */ }
+```
+
+### Answers:
+
+a. Initialization declarator moved outside of the for statement
+```cpp
+const int sz = 20;
+int ix = 0;
+
+for (; ix != sz; ++ix) { /* ... */ }
+if (ix != sz)
+    ;
+```
+
+b. Null-statement added before condition
+
+```cpp
+int ix = 0;
+int z = 5;
+for (; ix != z; ++ix) { /* ... */ }
+```
+
+c. Indefinitely running loop - remove `++sz` from expression
+
+```cpp
+for (int ix = 0; ix != sz; ++ix) { /* ... */ }
+```
+
+## Exercise 5.16
+
+### Question:
+
+The `while` loop is particularly good at executing while some condition holds; for example, when we need to read values until end-of-file. The `for` loop is generally thought of as a step loop: An index steps through a range of values in a collection. Write an idiomatic useof each loop and then rewrite each using the other loop construct. If you could use only one loop, which would you choose? Why?
+
+### Answers:
+
+```cpp
+// idiomatic while
+std::string word;
+while (std::cin >> word)
+    ;
+
+// idiomatic for
+unsigned x = 10;
+for (unsigned i = 0; i != x; i++)
+    ;
+
+// while
+unsigned y = 10;
+unsigned j = 0;
+while (j != y)
+    j++;
+
+// for
+for (std::string word; std::cin >> word;) 
+    ;
+```
+
+## Exercise 5.17
+
+### Question:
+
+Given two vectors of ints, write a program to determine whether one vector is a prefix of the other. For vectors of unequal length, compare the number of elements of the smaller vector. For example, given the vectors containing `0, 1, 1, 2` and `0, 1, 1, 2, 3, 5, 8`, respectively your program should return `true`
+
+### Answer:
+
+```cpp
+std::vector<int> vec1{0, 1, 1, 2};
+std::vector<int> vec2{0, 1, 1, 2, 3, 5, 8};
+
+const auto vec1_size = vec1.size();
+const auto vec2_size = vec2.size();
+
+const auto &left = vec1_size < vec2_size ? vec1 : vec2;
+const auto &right = vec1_size < vec2_size ? vec2 : vec1;
+
+const std::vector<int> intersection(right.begin(), right.begin() + left.size());
+
+const bool is_prefix = intersection == left;
+
+std::cout << "Is prefix: " << is_prefix << std::endl;
+```
