@@ -962,3 +962,79 @@ while (int ival = get_response()) {
     // ival will be initialized for the first iteration   
 }
 ```
+
+# Exercise Section 5.5.1
+
+## Exercise 5.20
+
+### Question:
+
+Write a program to read a sequence of strings from the standard input until either the same word occurs twice in succession or all the words have been read. Use a `while` loop to read the text one word at a time. Use the `break` statement to terminate the loop if a word occurs twice in succession. Print the word if it occurs twice in succession, or else print a message saying that no word was repeated.
+
+### Answer:
+
+```cpp
+std::string previous, current;
+bool duplicate_found = false;
+while (std::cin >> current) {
+    if (previous == current) {
+        std::cout << "Duplicate word found: " << current << std::endl;
+        duplicate_found = true;
+        break;
+    }
+
+    previous = current;
+}
+
+if (!duplicate_found) {
+    std::cout << "No duplicate found" << std::endl;
+}
+```
+
+# Exerise Section 5.5.2
+
+## Exercise 5.21
+
+### Question:
+
+Revise the program from the exercise in § 5.5.1 so that it looks only for duplicated words that start with an uppercase letter.
+
+### Answer:
+
+```cpp
+std::string previous, current;
+bool duplicate_found = false;
+while (std::cin >> current) {
+    if (!std::isupper(current[0]))
+        continue;
+
+    if (previous == current) {
+        std::cout << "Duplicate word found: " << current << std::endl;
+        duplicate_found = true;
+        break;
+    }
+
+    previous = current;
+}
+
+if (!duplicate_found) {
+    std::cout << "No duplicate found" << std::endl;
+}
+```
+
+# Exerise Section 5.5.3
+
+## Exercise 5.22
+
+### Question:
+
+The last example in this section that jumped back to `begin` could be better written using a loop. Rewrite the code to eliminate the `goto`
+
+### Answer:
+
+```cpp
+while (int sz = get_size()) {
+    if (sz > 0)
+        break;
+}
+```
