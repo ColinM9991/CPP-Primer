@@ -1038,3 +1038,76 @@ while (int sz = get_size()) {
         break;
 }
 ```
+
+# Exercise Section 5.6.3
+
+## Exercise 5.23
+
+### Question:
+
+Write a program that reads two integers from the standard input and prints the result of dividing the first number by the second.
+
+### Answer:
+
+```cpp
+int first, second;
+
+std::cout << "Enter two numbers: ";
+
+std::cin >> first >> second;
+
+std::cout << "Result: " << first / second << std::endl;
+```
+
+## Exercise 5.24
+
+### Question:
+
+Revise your program to throw an exception if the second number is zero. Test your program with a zero input to see what happens on your system if you don't `catch` an exception
+
+### Answer:
+
+```cpp
+int first, second;
+
+std::cout << "Enter two numbers: ";
+
+std::cin >> first >> second;
+
+if (second == 0)
+    throw std::out_of_range("Second value was zero");
+
+std::cout << "Result: " << first / second << std::endl;
+```
+
+## Exercise 5.25
+
+### Question:
+
+Revise your program from the previous exercise to use a `try` block to `catch` the exception. The `catch` clause should print a message to the user to supply a new number and repeat the code inside the `try`
+
+### Answer:
+
+```cpp
+int first, second;
+while (true) {
+    try {
+        std::cout << "Enter two numbers: ";
+
+        std::cin >> first >> second;
+
+        if (second == 0)
+            throw std::out_of_range("Second value was zero");
+
+        std::cout << "Result: " << first / second << std::endl;
+    } catch (std::out_of_range const &error) {
+        std::cout << error.what() << std::endl;
+        std::cout << "Try again? Y or N: ";
+
+        char c;
+        std::cin >> c;
+        if (!std::cin || c == 'n')
+            break;
+    }
+}
+```
