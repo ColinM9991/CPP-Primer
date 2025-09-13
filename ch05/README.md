@@ -864,7 +864,7 @@ bool is_prefix(std::vector<int> &left, std::vector<int> &right) {
     if (left.size() > right.size())
         return is_prefix(right, left);
 
-    for (auto i = 0; i < left.size(); i++) {
+    for (decltype(left.size()) i = 0; i < left.size(); i++) {
         if (left[i] != right[i]) return false;
     }
 
@@ -878,5 +878,87 @@ int main() {
     const bool prefix = is_prefix(vec1, vec2);
 
     std::cout << "Is prefix: " << prefix << std::endl;
+}
+```
+
+# Exercise Section 5.4.4
+
+## Exercise 5.18
+
+### Question:
+
+Explain each of the following loops. Correct any problems you detect.
+
+a.
+```cpp
+do
+    int v1, v2;
+    cout << "Please enter two numbers to sum:" ;
+    if (cin >> v1 >> v2)
+        cout << "Sum is: " << v1 + v2 << endl;
+while(cin);
+```
+
+b.
+```cpp
+do {
+
+} while (int ival = get_response());
+```
+
+c.
+```cpp
+do {
+    int ival = get_response();
+} while (ival);
+```
+
+### Answers:
+
+a. This loop reads two integers from the input stream which it then sums together. This code snippet is missing a block statement to encapsulate the body of the loop.
+
+```cpp
+do {
+    int v1, v2;
+    cout << "Please enter two numbers to sum:";
+    if (cin >> v1 >> v2)
+        cout << "Sum is: " << v1 + v2 << endl;
+}
+while(cin);
+```
+
+b. This loop attempts to declare a variable within the condition which is not allowed since the loop statement is invoked first before the condition is tested. Allowing this would allow the statement to access a non-initialized variable.
+
+There are two potential solutions:
+```cpp
+int ival = 0;
+do {
+    // This may not make sense depending on the context since ival will be 0 in the first iteration
+} while (ival = get_response());
+```
+
+alternatively:
+```cpp
+while (int ival = get_response()) {
+    // ival will be initialized for the first iteration   
+}
+```
+
+c. This loop attempts to use a variable defined within the statement block as a loop condition.
+
+There are also two possible solutions here:
+
+```cpp
+int ival; // Declare ival outside of the statement block
+do {
+    ival = get_response();
+} while (ival);
+```
+
+Alternatively, similarly to scenario b.
+
+```cpp
+while (int ival = get_response()) {
+    // ival will be initialized for the first iteration   
 }
 ```
