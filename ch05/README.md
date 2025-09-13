@@ -860,18 +860,23 @@ Given two vectors of ints, write a program to determine whether one vector is a 
 ### Answer:
 
 ```cpp
-std::vector<int> vec1{0, 1, 1, 2};
-std::vector<int> vec2{0, 1, 1, 2, 3, 5, 8};
+bool is_prefix(std::vector<int> &left, std::vector<int> &right) {
+    if (left.size() > right.size())
+        return is_prefix(right, left);
 
-const auto vec1_size = vec1.size();
-const auto vec2_size = vec2.size();
+    for (auto i = 0; i < left.size(); i++) {
+        if (left[i] != right[i]) return false;
+    }
 
-const auto &left = vec1_size < vec2_size ? vec1 : vec2;
-const auto &right = vec1_size < vec2_size ? vec2 : vec1;
+    return true;
+}
 
-const std::vector<int> intersection(right.begin(), right.begin() + left.size());
+int main() {
+    std::vector<int> vec1{0, 1, 1, 2};
+    std::vector<int> vec2{0, 1, 1, 2, 3, 5, 8};
 
-const bool is_prefix = intersection == left;
+    const bool prefix = is_prefix(vec1, vec2);
 
-std::cout << "Is prefix: " << is_prefix << std::endl;
+    std::cout << "Is prefix: " << prefix << std::endl;
+}
 ```
