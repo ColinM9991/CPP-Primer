@@ -32,7 +32,7 @@ f2(int i) { /* */ }
 
 c.
 ```cpp
-int calc(int v1, int v1) /* ... */ }
+int calc(int v1, int v1) { /* ... */ }
 ```
 
 d.
