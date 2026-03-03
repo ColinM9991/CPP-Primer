@@ -32,7 +32,7 @@ f2(int i) { /* */ }
 
 c.
 ```cpp
-int calc(int v1, int v1) /* ... */ }
+int calc(int v1, int v1) { /* ... */ }
 ```
 
 d.
@@ -136,7 +136,7 @@ int main() {
 
 ### Question
 
-Write a function to retunr the absolute value of its arugment
+Write a function to return the absolute value of its arugment
 
 ### Answer
 
